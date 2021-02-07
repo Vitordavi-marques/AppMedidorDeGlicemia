@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/morningButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
+            android:layout_marginBottom="@dimen/button_padding"
+            android:drawableLeft="@drawable/manha"
+            android:onClick="onMorningButtonClick"
+            android:text="@string/morning"
+            android:textSize="30sp"
+            app:backgroundTint="@color/morningColor" />
+
+        <Button
+            android:id="@+id/afternoonButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
+            android:layout_marginBottom="@dimen/button_padding"
+            android:drawableLeft="@drawable/almoco"
+            android:onClick="onAfternoonButtonClick"
+            android:text="@string/afternoon"
+            android:textSize="30sp"
+            app:backgroundTint="@color/afternoonColor" />
+
+        <Button
+            android:id="@+id/nightButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
+            android:layout_marginBottom="@dimen/button_padding"
+            android:drawableLeft="@drawable/janta"
+            android:onClick="onNightButtonClick"
+            android:text="@string/night"
+            android:textSize="30sp"
+            app:backgroundTint="@color/nightColor" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

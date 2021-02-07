@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="button_padding">8dp</dimen>
+    <dimen name="title_max_width">16dp</dimen>
+</resources>

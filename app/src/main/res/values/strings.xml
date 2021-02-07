@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Medidor de Glicemia</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="morning">JEJUM</string>
+    <string name="afternoon">ALMOÇO</string>
+    <string name="night">JANTA</string>
+    <string name="period_title">Clique no horário da medição</string>
+    <string name="insertTheMeasuredAmount">Digite o número de glicemia:</string>
+    <string name="save_record">TERMINAR</string>
+    <string name="period_view_fasting">Em Jejum</string>
+    <string name="period_view_lunch_time">Hora do almoço</string>
+    <string name="period_view_dinner_time">Hora da janta</string>
+    <string name="ok_button">OK</string>
+    <string name="success">Sucesso!</string>
+    <string name="there_is_an_error">Houve um erro</string>
+    <string name="dialog_glucose_amount_invalid_format">\"{0}\" não é um número de glicemia.</string>
+    <string name="record_created_success">Lançado com sucesso!</string>
+    <string name="record_created_fail">Houve um erro na criação do registro de glicemia.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="all_records_title">Registros:</string>
+    <string name="menu_all_records">Registros</string>
+    <string name="menu_all_emails">Enviar Emails</string>
+</resources>
