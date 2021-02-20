@@ -7,14 +7,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appdavovo.R;
 import com.appdavovo.controllers.MainController;
@@ -57,7 +54,7 @@ public class RecordAmountView extends AppCompatActivity {
         recordViewModel.glucoseAmount = Double.parseDouble(glucoseAmountEditField.getText().toString());
         recordViewModel.eMeasurePeriod = eMeasurePeriod;
 
-        boolean result = controller.createNewRecord(recordViewModel, this);
+        boolean result = controller.saveRecord(recordViewModel, this);
 
         if (result) {
             AlertDialog dialog = AlertDialogBuilder.buildCustomOk(

@@ -11,6 +11,7 @@ import com.appdavovo.models.models.Record;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecordDAO extends DataAccessObject {
@@ -37,6 +38,27 @@ public class RecordDAO extends DataAccessObject {
         try {
             newId = db.insert(TABLE_NAME, null, values);
             return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return false;
+    }
+
+    public boolean update(Record record, MeasurePeriod measurePeriod) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE, dateFormat.format(record.date));
+        values.put(COLUMN_GLUCOSE_AMOUNT, record.glucoseAmount);
+        values.put(COLUMN_PERIOD_ID, measurePeriod.id);
+
+        int rowsAffected = 0;
+        try {
+            rowsAffected = db.update(TABLE_NAME, values,
+                    COLUMN_ID + " = ?",
+                    new String[] { Integer.toString(record.id) });
+            return (rowsAffected > 0);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -73,6 +95,42 @@ public class RecordDAO extends DataAccessObject {
             c.moveToNext();
         }
 
+        db.close();
+
         return records;
+    }
+
+    public Record selectByDayAndPeriod(Date date, MeasurePeriod measurePeriod) {
+        String sql = "SELECT * FROM " + TABLE_NAME +
+                " WHERE " +
+                COLUMN_DATE + " > ? AND " +
+                COLUMN_PERIOD_ID + " = ?";
+
+        Cursor c = null;
+        try {
+            c = db.rawQuery(sql, new String[] {
+                    dateFormat.format(date),
+                    Integer.toString(measurePeriod.id) });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Record record = null;
+        if (c.moveToFirst()) {
+            record = new Record();
+            record.id = c.getInt(c.getColumnIndex(COLUMN_ID));
+            record.glucoseAmount = c.getDouble(c.getColumnIndex(COLUMN_GLUCOSE_AMOUNT));
+            record.eMeasurePeriod = EMeasurePeriod.getByEnumId(c.getInt(c.getColumnIndex(COLUMN_PERIOD_ID)));
+            try {
+                record.date = dateFormat.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        c.close();
+        db.close();
+
+        return record;
     }
 }

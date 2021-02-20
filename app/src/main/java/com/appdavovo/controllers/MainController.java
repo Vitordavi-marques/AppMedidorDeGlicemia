@@ -18,9 +18,9 @@ public class MainController {
         mainService = new MainService();
     }
 
-    public boolean createNewRecord(RecordViewModel viewModel, Context context) {
+    public boolean saveRecord(RecordViewModel viewModel, Context context) {
         try {
-            return mainService.createNewRecord(viewModel, context);
+            return mainService.saveRecord(viewModel, context);
         } catch (Exception e) {
             e.printStackTrace();
         }

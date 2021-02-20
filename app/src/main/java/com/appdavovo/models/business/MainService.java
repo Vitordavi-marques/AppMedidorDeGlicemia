@@ -12,20 +12,49 @@ import com.appdavovo.models.viewmodels.RecordViewModel;
 
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainService {
 
-    public boolean createNewRecord(RecordViewModel viewModel, Context context) {
+    private Date getActualDateWithoutTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+    }
+
+    public boolean saveRecord(RecordViewModel viewModel, Context context) {
+        // Get MeasurePeriod according to view model
         MeasurePeriodDAO measurePeriodDAO = new MeasurePeriodDAO(context);
         MeasurePeriod measurePeriod = measurePeriodDAO.getByEnumId(viewModel.eMeasurePeriod.getEnumId());
 
-        Record record = new Record(viewModel);
-        record.date = Calendar.getInstance().getTime();
-
+        // Get actual date and create RecordDAO
+        Date actualDate = Calendar.getInstance().getTime();
         RecordDAO recordDAO = new RecordDAO(context);
 
-        boolean result = recordDAO.insert(record, measurePeriod);
+        // Get supposed existing record
+        Record recordWithExistingDate = recordDAO.selectByDayAndPeriod(
+                getActualDateWithoutTime(), measurePeriod);
+
+        // Another record exists with same period
+        recordDAO = new RecordDAO(context);
+        boolean result = false;
+        if (recordWithExistingDate != null) {
+            recordWithExistingDate.date = actualDate;
+            recordWithExistingDate.glucoseAmount = viewModel.glucoseAmount;
+            result = recordDAO.update(recordWithExistingDate, measurePeriod);
+
+        // No record exists - create a new one
+        } else {
+            Record newRecord = new Record(viewModel);
+            newRecord.date = actualDate;
+            result = recordDAO.insert(newRecord, measurePeriod);
+        }
+
         return result;
     }
 
