@@ -28,6 +28,7 @@ public class MainService {
     }
 
     public boolean saveRecord(RecordViewModel viewModel, Context context) {
+
         // Get MeasurePeriod according to view model
         MeasurePeriodDAO measurePeriodDAO = new MeasurePeriodDAO(context);
         MeasurePeriod measurePeriod = measurePeriodDAO.getByEnumId(viewModel.eMeasurePeriod.getEnumId());
@@ -46,25 +47,29 @@ public class MainService {
         if (recordWithExistingDate != null) {
             recordWithExistingDate.date = actualDate;
             recordWithExistingDate.glucoseAmount = viewModel.glucoseAmount;
+            recordWithExistingDate.synced = false;
+            recordWithExistingDate.setHashcode();
             result = recordDAO.update(recordWithExistingDate, measurePeriod);
 
         // No record exists - create a new one
         } else {
             Record newRecord = new Record(viewModel);
             newRecord.date = actualDate;
+            newRecord.synced = false;
+            recordWithExistingDate.setHashcode();
             result = recordDAO.insert(newRecord, measurePeriod);
         }
 
         return result;
     }
 
-     public List<Record> getAllRecords(Context context) {
+    public List<Record> getAllRecords(Context context) {
         RecordDAO recordDAO = new RecordDAO(context);
         return recordDAO.selectAll();
-     }
+    }
 
-     public List<EmailTarget> getAllEmailTargets(Context context) {
-         EmailTargetDAO emailTargetDAO = new EmailTargetDAO(context);
-         return emailTargetDAO.selectAll();
-     }
+    public List<EmailTarget> getAllEmailTargets(Context context) {
+        EmailTargetDAO emailTargetDAO = new EmailTargetDAO(context);
+        return emailTargetDAO.selectAll();
+    }
 }

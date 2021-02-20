@@ -21,6 +21,8 @@ public class RecordDAO extends DataAccessObject {
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_GLUCOSE_AMOUNT = "glucoseAmount";
     public static final String COLUMN_PERIOD_ID = "periodId";
+    public static final String COLUMN_SYNCED = "synced";
+    public static final String COLUMN_HASHCODE = "hashcode";
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -33,6 +35,8 @@ public class RecordDAO extends DataAccessObject {
         values.put(COLUMN_DATE, dateFormat.format(record.date));
         values.put(COLUMN_GLUCOSE_AMOUNT, record.glucoseAmount);
         values.put(COLUMN_PERIOD_ID, measurePeriod.id);
+        values.put(COLUMN_SYNCED, record.synced);
+        values.put(COLUMN_HASHCODE, record.hashcode);
 
         long newId = -1;
         try {
@@ -52,6 +56,8 @@ public class RecordDAO extends DataAccessObject {
         values.put(COLUMN_DATE, dateFormat.format(record.date));
         values.put(COLUMN_GLUCOSE_AMOUNT, record.glucoseAmount);
         values.put(COLUMN_PERIOD_ID, measurePeriod.id);
+        values.put(COLUMN_SYNCED, record.synced);
+        values.put(COLUMN_HASHCODE, record.hashcode);
 
         int rowsAffected = 0;
         try {
@@ -86,6 +92,8 @@ public class RecordDAO extends DataAccessObject {
             r.id = c.getInt(c.getColumnIndex(COLUMN_ID));
             r.glucoseAmount = c.getDouble(c.getColumnIndex(COLUMN_GLUCOSE_AMOUNT));
             r.eMeasurePeriod = EMeasurePeriod.getByEnumId(c.getInt(c.getColumnIndex(COLUMN_PERIOD_ID)));
+            r.synced = (c.getInt(c.getColumnIndex(COLUMN_SYNCED)) != 0);
+            r.hashcode = c.getString(c.getColumnIndex(COLUMN_HASHCODE));
             try {
                 r.date = dateFormat.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
             } catch (ParseException e) {
@@ -121,6 +129,8 @@ public class RecordDAO extends DataAccessObject {
             record.id = c.getInt(c.getColumnIndex(COLUMN_ID));
             record.glucoseAmount = c.getDouble(c.getColumnIndex(COLUMN_GLUCOSE_AMOUNT));
             record.eMeasurePeriod = EMeasurePeriod.getByEnumId(c.getInt(c.getColumnIndex(COLUMN_PERIOD_ID)));
+            record.synced = (c.getInt(c.getColumnIndex(COLUMN_SYNCED)) != 0);
+            record.hashcode = c.getString(c.getColumnIndex(COLUMN_HASHCODE));
             try {
                 record.date = dateFormat.parse(c.getString(c.getColumnIndex(COLUMN_DATE)));
             } catch (ParseException e) {
